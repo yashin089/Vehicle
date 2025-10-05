@@ -1,6 +1,6 @@
 package ru.homework3;
 
-public sealed abstract class Transport implements Movable permits Car, Plane, Ship, Bicycle{
+public sealed abstract class Transport implements Movable, Infoable permits Car, Plane, Ship, Bicycle {
 
     private String model;
     private String year;
@@ -26,6 +26,7 @@ public sealed abstract class Transport implements Movable permits Car, Plane, Sh
         this.year = year;
     }
 
+    @Override
     public void get_info() {
         System.out.println("Модель: " + model);
         System.out.println("Год выпуска: " + year);
