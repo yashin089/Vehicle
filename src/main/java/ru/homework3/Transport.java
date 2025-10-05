@@ -1,6 +1,6 @@
 package ru.homework3;
 
-public abstract class Transport implements Movable {
+public sealed abstract class Transport implements Movable permits Car, Plane, Ship, Bicycle{
 
     private String model;
     private String year;
@@ -21,6 +21,14 @@ public abstract class Transport implements Movable {
         this.year = year;
     }
 
-    public abstract void get_info();
+    public Transport(String model, String year) {
+        this.model = model;
+        this.year = year;
+    }
+
+    public void get_info() {
+        System.out.println("Модель: " + model);
+        System.out.println("Год выпуска: " + year);
+    }
 
 }
