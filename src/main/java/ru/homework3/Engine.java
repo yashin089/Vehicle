@@ -3,7 +3,7 @@ package ru.homework3;
 public class Engine implements Infoable {
     private String model;
     private TypeEngine engineType;
-    private int power;
+    private double power;
 
     public String getModel() {
         return model;
@@ -21,7 +21,7 @@ public class Engine implements Infoable {
         this.engineType = engineType;
     }
 
-    public int getPower() {
+    public double getPower() {
         return power;
     }
 
@@ -29,7 +29,7 @@ public class Engine implements Infoable {
         this.power = power;
     }
 
-    public Engine(String model, TypeEngine engineType, int power) {
+    public Engine(String model, TypeEngine engineType, double power) {
         this.model = model;
         this.engineType = engineType;
         this.power = power;
