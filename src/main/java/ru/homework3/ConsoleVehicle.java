@@ -27,6 +27,8 @@ public class ConsoleVehicle {
                 } else {
                     Transport transport = getTransportByCommand(command);
                     transport.get_info();
+                    transport.move();
+                    transport.stop();
                     isNoShowInf = false;
                 }
             } else {    //Если не удалось получить корректное выражение
