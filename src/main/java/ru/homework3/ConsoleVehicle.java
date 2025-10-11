@@ -25,11 +25,17 @@ public class ConsoleVehicle {
                 if (command == ConsoleCommand.EXIT) {
                     isExit = true;
                 } else {
-                    Transport transport = getTransportByCommand(command);
-                    transport.get_info();
-                    transport.move();
-                    transport.stop();
-                    isNoShowInf = false;
+                    try {
+                        Transport transport = getTransportByCommand(command);
+                        transport.get_info();
+                        transport.move();
+                        transport.stop();
+                        isNoShowInf = false;
+                    } catch (NullTransportByCommand e) {
+                        System.out.println(e.getMessage());
+                        System.out.println("Что-то пошло не так, обратитесь в поддержку");
+                        return;
+                    }
                 }
             } else {    //Если не удалось получить корректное выражение
                 System.out.println("Неверное выражение. Введите еще раз:");
@@ -61,29 +67,24 @@ public class ConsoleVehicle {
         //Запрашиваем выражение от пользователя
         String expression = scanner.nextLine();
 
-        command = ConsoleCommand.findByValue(expression);
-        if (command != null) {
+        try {
+            command = ConsoleCommand.findByValue(expression);
             return true;
-        } else {
+        } catch (NullCommandException e) {
             return false;
         }
     }
 
-    private Transport getTransportByCommand(ConsoleCommand command) {
+    private Transport getTransportByCommand(ConsoleCommand command) throws NullTransportByCommand {
         return switch (command) {
-            case CREATE_BICYCLE:
-                yield new Bicycle("ACID 29", "2014");
-            case CREATE_CAR:
-                yield new Car("Audi A4 B9", "2025",
-                        new Engine("EA888 GEN5", TypeEngine.PETROL, 190));
-            case CREATE_PLANE:
-                yield new Plane("МС-21-310", "2025",
-                        new Engine("ПД-14", TypeEngine.JET_ENGINES, 14000));
-            case CREATE_SHIP:
-                yield new Ship("Сухогруз проекта RSD59", "2025",
-                        new Engine("6L20", TypeEngine.DIESEL, 3000));
-            default:
-                yield null;
+            case CREATE_BICYCLE -> new Bicycle("ACID 29", "2014");
+            case CREATE_CAR -> new Car("Audi A4 B9", "2025",
+                    new Engine("EA888 GEN5", TypeEngine.PETROL, 190));
+            case CREATE_PLANE -> new Plane("МС-21-310", "2025",
+                    new Engine("ПД-14", TypeEngine.JET_ENGINES, 14000));
+            case CREATE_SHIP -> new Ship("Сухогруз проекта RSD59", "2025",
+                    new Engine("6L20", TypeEngine.DIESEL, 3000));
+            default -> throw new NullTransportByCommand("Не удалось создать нужный транспорт по команде");
         };
     }
 
