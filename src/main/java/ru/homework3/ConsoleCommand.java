@@ -7,7 +7,7 @@ public enum ConsoleCommand {
     CREATE_SHIP ("4"),
     EXIT ("exit");
 
-    private String value;
+    private final String value;
 
     ConsoleCommand(String value) {
         this.value = value;
@@ -22,7 +22,7 @@ public enum ConsoleCommand {
         return value;
     }
 
-    public static ConsoleCommand findByValue(String value) {
+    public static ConsoleCommand findByValue(String value) throws NullCommandException {
         ConsoleCommand result = null;
         for (ConsoleCommand command : values()) {
             if (command.getValue().equals(value)) {
@@ -30,6 +30,11 @@ public enum ConsoleCommand {
                 break;
             }
         }
-        return result;
+        if (result != null){
+            return result;
+        } else {
+            throw new NullCommandException("Не удалось определить команду");
+        }
+
     }
 }
